@@ -17,6 +17,8 @@ import org.ajoberstar.grgit.Grgit
 
 buildscript {
   repositories {
+    maven { url 'http://artifactory.jd.com/libs-releases-local/' }
+    maven { url "http://artifactory.jd.com/libs-snapshots-local/" }
     mavenCentral()
     jcenter()
   }
@@ -26,7 +28,7 @@ buildscript {
     // For Apache Rat plugin to ignore non-Git files
     classpath "org.ajoberstar:grgit:1.5.0"
     classpath 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
-    classpath 'org.scoverage:gradle-scoverage:2.1.0'
+    classpath 'org.scoverage:gradle-scoverage:2.5.0'
   }
 }
 
@@ -36,6 +38,8 @@ allprojects {
   apply plugin: "jacoco"
 
   repositories {
+    maven { url 'http://artifactory.jd.com/libs-releases-local/' }
+    maven { url "http://artifactory.jd.com/libs-snapshots-local/" }
     mavenCentral()
   }
 
@@ -68,7 +72,7 @@ allprojects {
 }
 
 ext {
-  gradleVersion = "4.8.1"
+  gradleVersion = "3.0"
   buildVersionFileName = "kafka-version.properties"
 
   maxPermSizeArgs = []
