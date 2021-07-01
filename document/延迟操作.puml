@@ -1,0 +1,32 @@
+@startuml 延迟操作类图
+interface Runnable
+interface TimerTask
+interface Logging
+abstract DelayedOperation{
+AtomicBoolean completed;控制延迟操作是否完成
+Boolean tryComplete();子类覆盖实现，用于检测执行条件是否满足
+Unit onComplete();子类覆盖实现。具体的延时操作业务逻辑
+Unit cancel();将任务从TimerTask中删除（synchronized同步调用）
+Boolean forceComplete();先调用cancel();在调用onComplete();。通过completed的CAS操作保证该操作只会被执行一次。
+Boolean safeTryComplete();synchronized调用tryComplete();
+Unit onExpiration();子类覆盖实现，用于在延迟操作到达失效时间时的响应逻辑处理。
+}
+class DelayedHeartbeat
+class DelayedJoin
+class DelayedCreateTopics
+class DelayedDeleteTopics
+class DelayedFetch
+class DelayedProduce
+Runnable <|-- TimerTask
+TimerTask <|-- DelayedOperation
+Logging <|-- DelayedOperation
+DelayedOperation <|-- DelayedHeartbeat
+DelayedOperation <|-- DelayedJoin
+DelayedOperation <|-- DelayedCreateTopics
+DelayedOperation <|-- DelayedDeleteTopics
+DelayedOperation <|-- DelayedFetch
+DelayedOperation <|-- DelayedProduce
+@enduml
+@startuml 延迟操作的主要方法
+
+@enduml
