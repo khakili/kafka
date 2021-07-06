@@ -27,6 +27,13 @@ DelayedOperation <|-- DelayedDeleteTopics
 DelayedOperation <|-- DelayedFetch
 DelayedOperation <|-- DelayedProduce
 @enduml
-@startuml 延迟操作的主要方法
-
+@startuml DelayedOperationPurgatory
+note left of DelayedOperationPurgatory
+借助内部类Watchers来维护DelayOperation
+内部会维护new Pool[Any, Watchers]
+end note
+class DelayedOperationPurgatory{
+Boolean tryCompleteElseWatch();检测操作是否已经完成，未完成添加至Pool
+Int checkAndComplete();检查延迟操作是否完成。会返回完成延迟操作的个数。
+}
 @enduml
